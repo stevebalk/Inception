@@ -1,0 +1,26 @@
+services:
+  nginx:
+    container_name: nginx
+    build: requirements/nginx/
+    image: nginx
+    ports:
+      - "80:80"          # Expose port 80 for HTTP traffic
+      - "443:443"        # Expose port 443 for HTTPS traffic
+      - "127.0.0.1:9000:9000"  # Bind port 9000 to the loopback interface for internal communication
+    volumes:
+      - /home/$USER/data/website:/var/www/html
+    restart: always
+    # depends_on:
+    # networks:
+
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress/
+    image: wordpress
+    ports:
+      - "8080:80"        # Expose port 8080 for HTTP traffic
+    volumes:
+      - /home/$USER/data/website:/var/www/html
+    restart: always
+    # depends_on:
+    # networks:
