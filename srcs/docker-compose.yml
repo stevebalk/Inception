@@ -6,21 +6,46 @@ services:
     ports:
       - "80:80"          # Expose port 80 for HTTP traffic
       - "443:443"        # Expose port 443 for HTTPS traffic
-      - "127.0.0.1:9000:9000"  # Bind port 9000 to the loopback interface for internal communication
     volumes:
       - /home/$USER/data/website:/var/www/html
     restart: always
-    # depends_on:
-    # networks:
+    depends_on:
+      - wordpress
+      - mariadb
+    networks: frontend
+
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb/
+    image: mariadb
+    env_file:
+      - .env
+    ports: 
+      - "3306:3306"
+    networks: 
+      - backend
+    restart: always
+    volumes:
+      - /home/$USER/data/database:/var/lib/mysql
 
   wordpress:
     container_name: wordpress
     build: requirements/wordpress/
     image: wordpress
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "8080:80"        # Expose port 8080 for HTTP traffic
+      - "9000:9000"
     volumes:
       - /home/$USER/data/website:/var/www/html
     restart: always
-    # depends_on:
-    # networks:
+    depends_on:
+      - mariadb
+    networks:
+      - frontend
+      - backend
+
+

@@ -1,6 +1,7 @@
 HOSTNAME = sbalk.42.fr
 LOCAL_IP = 127.0.0.1
-SHARED_DIR = $(HOME)/data/website
+WEBSITE_DIR = $(HOME)/data/website
+DATABASE_DIR = $(HOME)/data/database
 
 
 all:
@@ -9,7 +10,7 @@ all:
 
 start: setup
 	echo "Starting services"
-	mkdir -p $(SHARED_DIR)
+	mkdir -p $(WEBSITE_DIR)
 	docker-compose -f srcs/docker-compose.yml up -d
 
 setup:
@@ -23,7 +24,7 @@ stop:
 
 clean: stop
 	@echo "Cleaning up host redirection..."
-	rm -rf $(SHARED_DIR)
+	rm -rf $(WEBSITE_DIR)
 	# sudo sed -i '' "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
 	@docker container rm -f nginx wordpress mariadb
 	@echo "Clean done"

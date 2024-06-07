@@ -15,6 +15,6 @@ RUN wget https://wordpress.org/latest.tar.gz \
 	&& chown -R nobody:nobody /var/www/html \
 	&& chmod -R 755 /var/www/html
 
-# RUN	adduser -S nginx &&	addgroup -S nginx
-# COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
-# COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
+RUN	adduser -S nginx &&	addgroup -S nginx
+COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
+COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
