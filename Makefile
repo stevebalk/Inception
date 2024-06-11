@@ -24,9 +24,13 @@ stop:
 
 clean: stop
 	@echo "Cleaning up host redirection..."
-	rm -rf $(WEBSITE_DIR)
+	# rm -rf $(WEBSITE_DIR)
+	# rm -rf $(DATABASE_DIR)
 	# sudo sed -i '' "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
-	@docker container rm -f nginx wordpress mariadb
+	docker image prune -a -f
+	docker container prune -f
+	docker build -t rm_db .
+	docker run -v /home/sbalk/data:/app rm_db
 	@echo "Clean done"
 
 show: 
