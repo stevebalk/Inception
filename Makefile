@@ -31,7 +31,8 @@ clean: stop
 	docker image prune -a -f
 	docker container prune -f
 	docker build -t rm_db .
-	docker run -v /home/sbalk/data:/app rm_db
+	docker run --rm -v ${HOME}/data:/app rm_db
+	rm -rf ${HOME}/data
 	@echo "Clean done"
 
 show: 

@@ -13,11 +13,8 @@ RUN mkdir -p /etc/nginx/ssl && \
         -out /etc/nginx/ssl/nginx.crt \
         -subj "/CN=localhost"
 
-# Remove default Nginx server definition if it exists
-RUN rm -f /etc/nginx/conf.d/default.conf /etc/nginx/http.d/default.conf
-
 # Copy the updated Nginx configuration file
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/nginx.conf /etc/nginx/http.d/default.conf
 
 # Copy HTML files to be served by Nginx
 # COPY html /usr/share/nginx/html
