@@ -1,6 +1,6 @@
 HOSTNAME = sbalk.42.fr
 LOCAL_IP = 127.0.0.1
-WEBSITE_DIR = $(HOME)/data/website
+WEBSITE_DIR = $(HOME)/data/wordpress
 DATABASE_DIR = $(HOME)/data/database
 
 
@@ -11,6 +11,7 @@ all:
 start: setup
 	echo "Starting services"
 	mkdir -p $(WEBSITE_DIR)
+	mkdir -p $(DATABASE_DIR)
 	docker-compose -f srcs/docker-compose.yml up -d
 
 setup:

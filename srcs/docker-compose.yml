@@ -1,46 +1,59 @@
 services:
   nginx:
     container_name: nginx
+    hostname: nginx
     build: requirements/nginx/
     ports:
-      - "80:80"          # Expose port 80 for HTTP traffic
       - "443:443"        # Expose port 443 for HTTPS traffic
     volumes:
-      - /home/$USER/data/website:/var/www/html
+      - wordpress:/var/www/html
     restart: always
     depends_on:
       - wordpress
       - mariadb
     networks:
-      - container
+      - inception
 
   mariadb:
     container_name: mariadb
+    hostname: mariadb
     build: requirements/mariadb/
     env_file:
       - .env
-    ports: 
-      - "3306:3306"
-    networks:
-      - container
     restart: always
     volumes:
-      - /home/$USER/data/database:/var/lib/mysql
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
 
   wordpress:
     container_name: wordpress
+    hostname: wordpress
     build: requirements/wordpress/
     env_file:
       .env
-    ports:
-      - "9000:9000"
     volumes:
-      - /home/$USER/data/website:/var/www/html
+      - wordpress:/var/www/html
     restart: always
     depends_on:
       - mariadb
     networks:
-      - container
+      - inception
 
 networks:
-  container:
+  inception:
+
+volumes:
+  mariadb:
+    name: mariadb_volume
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/database
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: $HOME/data/wordpress

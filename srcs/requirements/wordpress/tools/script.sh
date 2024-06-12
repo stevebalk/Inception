@@ -12,8 +12,12 @@ if [ ! -f "./wp-config.php" ]; then
 	wp user create $WP_USER $WP_EMAIL --role=author --user_pass=$WP_USER_PWD --allow-root
 	wp theme install astra --activate --allow-root
 
+	sed -i 's/;pid = run\/php-fpm82.pid/pid = run\/php-fpm82.pid/g' /etc/php82/php-fpm.conf
+
 	sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php82/php-fpm.d/www.conf
+	sed -i 's/user = nobody/user = nginx/g' /etc/php82/php-fpm.d/www.conf
+	sed -i 's/group = nobody/group = nginx/g' /etc/php82/php-fpm.d/www.conf
 	mkdir -p /run/php
 fi
 
-/usr/sbin/php-fpm82 -F
+exec /usr/sbin/php-fpm82 -F
