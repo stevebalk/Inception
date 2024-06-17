@@ -53,6 +53,7 @@ volumes:
       o: bind
       device: $HOME/data/database
   wordpress:
+    name: wordpress_volume
     driver: local
     driver_opts:
       type: none

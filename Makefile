@@ -26,7 +26,7 @@ stop:
 clean: stop
 	@echo "Cleaning up host redirection..."
 	sudo sed -i "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
-	docker system prune --all
+	docker system prune -f --all
 	sudo rm -rf ${HOME}/data
 	@echo "Clean done"
 
