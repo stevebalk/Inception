@@ -25,12 +25,8 @@ stop:
 
 clean: stop
 	@echo "Cleaning up host redirection..."
-#	rm -rf $(WEBSITE_DIR)
-#	rm -rf $(DATABASE_DIR)
 	sudo sed -i "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
-	docker system prune --all --force --volumes
-#	docker build -t rm_db .
-#	docker run --rm -v ${HOME}/data:/app rm_db
+	docker system prune --all
 	sudo rm -rf ${HOME}/data
 	@echo "Clean done"
 

@@ -6,7 +6,6 @@ ARG PHP_VERSION=82
 RUN apk update && apk add --no-cache \
 	curl \
 	openssl \
-	unzip \	
     mariadb-client \
 	php${PHP_VERSION} \
     php${PHP_VERSION}-fpm \
@@ -26,21 +25,6 @@ RUN apk update && apk add --no-cache \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip
-    # php82 \
-	# php82-fpm \
-	# php82-mysqli \
-	# php82-phar \
-	# php82-curl \
-	# php82-dom \
-	# php82-exif \
-	# php82-pecl-imagick \
-	# php82-fileinfo \
-	# php82-pecl-igbinary \
-	# php82-intl \
-	# php82-mbstring \
-	# php82-openssl \
-	# php82-xml \
-	# php82-zip
 
 
 # RUN docker-php-ext-install phar
