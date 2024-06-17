@@ -42,6 +42,7 @@ services:
 
 networks:
   inception:
+    name: inception
 
 volumes:
   mariadb:

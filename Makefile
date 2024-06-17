@@ -16,8 +16,8 @@ start: setup
 
 setup:
 	@echo "Setting up host redirection..."
-#	@set -e; \
-#	@grep -qxF "$(LOCAL_IP) $(HOSTNAME)" /etc/hosts || (echo "$(LOCAL_IP) $(HOSTNAME)" | sudo tee -a /etc/hosts > /dev/null) \
+	@set -e;
+	@grep -qxF "$(LOCAL_IP) $(HOSTNAME)" /etc/hosts || (echo "$(LOCAL_IP) $(HOSTNAME)" | sudo tee -a /etc/hosts > /dev/null)
 	@echo "Setup done"
 
 stop:
@@ -25,14 +25,13 @@ stop:
 
 clean: stop
 	@echo "Cleaning up host redirection..."
-	# rm -rf $(WEBSITE_DIR)
-	# rm -rf $(DATABASE_DIR)
-	# sudo sed -i '' "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
-	docker image prune -a -f
-	docker container prune -f
-	docker build -t rm_db .
-	docker run --rm -v ${HOME}/data:/app rm_db
-	rm -rf ${HOME}/data
+#	rm -rf $(WEBSITE_DIR)
+#	rm -rf $(DATABASE_DIR)
+	sudo sed -i "/$(LOCAL_IP) $(HOSTNAME)/d" /etc/hosts
+	docker system prune --all --force --volumes
+#	docker build -t rm_db .
+#	docker run --rm -v ${HOME}/data:/app rm_db
+	sudo rm -rf ${HOME}/data
 	@echo "Clean done"
 
 show: 
