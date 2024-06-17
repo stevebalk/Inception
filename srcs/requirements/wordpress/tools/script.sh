@@ -19,5 +19,6 @@ sed -i 's/listen = 127.0.0.1:9000/listen = 9000/g' /etc/php82/php-fpm.d/www.conf
 sed -i 's/user = nobody/user = nginx/g' /etc/php82/php-fpm.d/www.conf
 sed -i 's/group = nobody/group = nginx/g' /etc/php82/php-fpm.d/www.conf
 mkdir -p /run/php
+chmod -R 777 /var/www/html/wp-content/
 
 exec /usr/sbin/php-fpm82 -F
